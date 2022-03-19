@@ -20,4 +20,4 @@ This challenge is based on Kubernetes Security where you  will have to make use 
 
 Click above each link to see my walkthrough.
 
-Finally, I win the **"CKA"** exam Voucher. Thank you so much for this prize.  I got a lot of hands-on experience from this hackathon challenge. I have learned two new tools "Trivy" and "AppArmor". I solved network policy tricks, Kube-APISERVER's health, scanning the image vulnerability, etc.
+Finally, I got a lot of hands-on experience from this hackathon challenge. I have learned two new tools "Trivy" and "AppArmor". I solved network policy tricks, Kube-APISERVER's health, scanning the image vulnerability, etc.
