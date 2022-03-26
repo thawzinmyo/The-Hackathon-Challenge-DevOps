@@ -1,3 +1,4 @@
+
 # Deploy a Jekyll SSG Application on Kubernetes
 
 Here is the architecture for implementing a Jekyll SSG.
@@ -8,8 +9,8 @@ When you press each icon in the architecture, will see the questions.
 
 Let's start with easy task by entering mail address.
 
-Question in "user_email" icon.
-- Mandatory Step: Save your email address to a file called '/root/user_email.txt' on the controlplane node
+Question in `user_email` icon.
+- Mandatory Step: Save your email address to a file called `/root/user_email.txt` on the controlplane node
 
 Solution:
 
@@ -31,9 +32,9 @@ $  cat /root/user_email.txt
 ---
 
 
-Quesiton in "martin" icon.
-- Build user information for martin in the default kubeconfig file: User = martin , client-key = /root/martin.key and client-certificate = /root/martin.crt
-- Create a new context called 'developer' in the default kubeconfig file with 'user = martin' and 'cluster = kubernetes'
+Quesiton in `martin` icon.
+- Build user information for martin in the default kubeconfig file: `User = martin , client-key = /root/martin.key and client-certificate = /root/martin.crt`
+- Create a new context called `developer` in the default kubeconfig file with `user = martin` and `cluster = kubernetes`
 
 Solution:
 
@@ -41,7 +42,7 @@ Solution:
 $  kubectl config current-context 
    kubernetes-admin@kubernetes
 ```
-I also check in .kube/config . There is a default context. So, I need to add the given context information for "martin" user...
+I also check in `.kube/config` . There is a default context. So, I need to add the given context information for `martin` user...
 <details>
 <summary>Output</summary>
 <p>
@@ -69,14 +70,14 @@ Done!!! Leave it that!
 ---
 ---
 
-Question in "developer-role" icon.
-- 'developer-role', should have all(*) permissions for services in development namespace
-- 'developer-role', should have all permissions(*) for persistentvolumeclaims in development namespace
-- 'developer-role', should have all(*) permissions for pods in development namespace
+Question in `developer-role` icon.
+- `developer-role`, should have all(*) permissions for services in development namespace
+- `developer-role`, should have all permissions(*) for persistentvolumeclaims in development namespace
+- `developer-role`, should have all(*) permissions for pods in development namespace
 
 Solution:
 
-Let's create "developer-role" using declrative command
+Let's create `developer-role` using declrative command
 
 ```bash
 $  cat /root/developer-role.yaml
@@ -120,9 +121,9 @@ $  kubectl get role --namespace development
 
 ---
 ---
-Question in "developer-rolebinding" icon.
-- create rolebinding = developer-rolebinding, role= 'developer-role', namespace = development
-- rolebinding = developer-rolebinding associated with user = 'martin'
+Question in `developer-rolebinding` icon.
+- create rolebinding = `developer-rolebinding`, role= `developer-role`, `namespace = development`
+- rolebinding = `developer-rolebinding` associated with user = `martin`
 
 Solution:
 
@@ -174,7 +175,7 @@ $  kubectl get rolebinding --namespace development
 
 ---
 ---
-Question in "jekyll-pv" icon.
+Question in `jekyll-pv` icon.
 - jekyll-site pv is already created. Inspect it before you create the pvc
 
 Solution:
@@ -196,11 +197,11 @@ $  kubectl --namespace development get persistentvolume
 ---
 ---
 
-Question in "jekyll-pvc" icon.
+Question in `jekyll-pvc` icon.
 - Storage Request: 1Gi
 - Access modes: ReadWriteMany
-- pvc name = jekyll-site, namespace development
-- 'jekyll-site' PVC should be bound to the PersistentVolume called 'jekyll-site'.
+- pvc name = `jekyll-site`, namespace development
+- `jekyll-site` PVC should be bound to the PersistentVolume called `jekyll-site`.
   
 Solution:
 
@@ -231,7 +232,7 @@ $  kubectl create -f pvc.yaml
 persistentvolumeclaim/jekyll-site created
 ```
 
-Let's verify the resource that created by checking "Output"
+Let's verify the resource that created by checking `Output`
 
 <details>
 <summary>Output</summary>
@@ -250,16 +251,16 @@ PV and PVC are bounded. Let's move next task.
 ---
 ---
 
-Question in "jekyll" icon.
-- pod: 'jekyll' has an initContainer, name: 'copy-jekyll-site', image: 'kodekloud/jekyll'
-- initContainer: 'copy-jekyll-site', command: [ "jekyll", "new", "/site" ] (command to run: jekyll new /site)
-pod: 'jekyll', initContainer: 'copy-jekyll-site', mountPath = '/site'
-- pod: 'jekyll', initContainer: 'copy-jekyll-site', volume name = 'site'
-- pod: 'jekyll', container: 'jekyll', volume name = 'site'
-- pod: 'jekyll', container: 'jekyll', mountPath = '/site'
-- pod: 'jekyll', container: 'jekyll', image = 'kodekloud/jekyll-serve'
-- pod: 'jekyll', uses volume called 'site' with pvc = 'jekyll-site'
-- pod: 'jekyll' uses label 'run=jekyll'
+Question in `jekyll` icon.
+- pod: `jekyll` has an initContainer, name: `copy-jekyll-site`, `image: 'kodekloud/jekyll'`
+- initContainer: `copy-jekyll-site`, `command: [ "jekyll", "new", "/site" ]` (command to run: jekyll new /site)
+- pod: `jekyll`, initContainer: `copy-jekyll-site`, mountPath = `/site`
+- pod: `jekyll`, initContainer: `'copy-jekyll-site'`, volume name = `site`
+- pod: `jekyll`, container: `jekyll`, volume name = `site`
+- pod: `jekyll`, container: `jekyll`, mountPath = `/site`
+- pod: `jekyll`, container: `jekyll`, image = `kodekloud/jekyll-serve`
+- pod: `jekyll`, uses volume called `site` with pvc = `jekyll-site`
+- pod: `jekyll` uses label `run=jekyll`
 
 Solution:
 
@@ -307,7 +308,7 @@ $  kubectl create -f pod.yaml
    pod/jekyll created
 ```
 
-Let's verify the resource that created by checking "Output".
+Let's verify the resource that created by checking `Output`.
 <details>
 <summary>Running initContainer</summary>
 <p>
@@ -335,12 +336,12 @@ $  kubectl --namespace development get pod
 ---
 ---
 
-Now, Let's create the NodePort service for that POD named "Jekyll"
+Now, Let's create the NodePort service for that POD named `Jekyll`
 
-Question in "jekyll-node-service"
-- Service 'jekyll' uses targetPort: '4000' , namespace: 'development'
-Service 'jekyll' uses Port: '8080' , namespace: 'development'
-- Service 'jekyll' uses NodePort: '30097' , namespace: 'development'
+Question in `jekyll-node-service`
+- Service `jekyll` uses `targetPort: '4000'` , `namespace: 'development'`
+- Service `jekyll` uses `Port: '8080'` , `namespace: 'development'`
+- Service `jekyll` uses `NodePort: '30097'`, `namespace: 'development'`
 
 Solution:
 
@@ -349,7 +350,7 @@ Let's create the NodePort Service type using imperative command then edit "jekyl
 ```bash
 $ kubectl --namespace development expose pod jekyll --type NodePort --name jekyll --port 8080 --target-port 4000 --dry-run=client -o yaml > jekyll-svc.yaml
 ```
-Edit the "jekyll-svc.yaml" by adding "nodePort" using VI.
+Edit the `jekyll-svc.yaml` by adding `nodePort` using VI.
 <details>
 <summary>Output</summary>
 <p>
@@ -386,7 +387,7 @@ $  kubectl --namespace development get svc
   
 Let's inspect the details of NodePort service.
 <details>
-<summary>Inspecting NodePort Service named "jekyll"
+<summary>Inspecting NodePort Service named `jekyll`
 </summary>
 <p>
 
@@ -419,15 +420,15 @@ Service is working.
 ---
 
 Now, 
-Question in "kube-config" icon.
-- set context 'developer' with user = 'martin' and cluster = 'kubernetes' as the current context.
+Question in `kube-config` icon.
+- set context `developer` with user = `martin` and cluster = `kubernetes` as the current context.
 
-I created for "martin" user with cluster named "kubernetes". Now, according to the given question, switch the context using the following command.
+I created for `martin` user with cluster named `kubernetes`. Now, according to the given question, switch the context using the following command.
 ```bash
 $ kubectl config use-context developer
 ```
 
-Let's verify the output using "current-context" flag.
+Let's verify the output using `current-context` flag.
 ```bash
 $ kubectl config current-context
   developer
@@ -437,7 +438,7 @@ $ kubectl config current-context
 ---
 Now, press **Check** button on the left side.
 
-Bomb!!! You will see "Complete" 
+Bomb!!! You will see `Complete` 
 
 ![Challenge Complete!](https://github.com/thawzinmyo/The-Hackathon-Challenge-DevOps/blob/master/image/Deploy_a_Jekyll_SSG_Application_On_Kubernetes_Architecture.png)
 
