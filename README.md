@@ -20,4 +20,4 @@ This challenge is based on Kubernetes Security where you  will have to make use 
 
 Click above each link to see my walkthrough.
 
-Finally, I got a lot of hands-on experience from this hackathon challenge. I have learned two new tools "Trivy" and "AppArmor". I solved network policy tricks, Kube-APISERVER's health, scanning the image vulnerability, etc.
+Finally,I won the [**CKA**](https://github.com/thawzinmyo/The-Hackathon-Challenge-DevOps/blob/master/image/KK-Award-GIMP02.png) exam voucher from KodeKloud. Thank you so much for this award. I got a lot of hands-on experience from this hackathon challenge. I have learned two new tools "Trivy" and "AppArmor". I solved network policy tricks, Kube-APISERVER's health, scanning the image vulnerability, etc.
